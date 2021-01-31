@@ -1,7 +1,66 @@
 {% extends "auctions/layout.html" %}
 
+
 {% block body %}
     
-    <h2> success </h2>
-    
+
+    <!-- Title -->
+    <h1>{{ listing.title }}</h1>
+
+
+    <!-- Add to watchlist -->
+    <form action="{% url 'watchlist' %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="listing_id" value="{{ listing.id }}">
+        {% if listing_in_watchlist %}
+            <input type="hidden" name="listing_bool" value="True">
+            <input class="btn btn-danger" type="submit" value="Remove from Watchlist">
+        {% else %}
+            <input type="hidden" name="listing_bool" value="False">
+            <input class="btn btn-primary" type="submit" value="Add To Watchlist">
+        {% endif %}
+    </form>
+
+
+
+    <!-- Image, if there. Code proper CSS for sizing the image //TODO -->
+    <img src="{{ listing.image_url }}" height="300" width="500">
+
+
+    <!-- Description -->
+    <p>{{ listing.description }}</p>
+
+
+    <!-- Current Bid -->
+    <h3>Current bid: {{ current_bid }}</h3>
+    <!-- <form> enter bid here </form> -->
+
+
+
+    <h2>Comments</h2>
+    <hr>
+    <form action="{% url 'createComment' %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="listing_id" value="{{ listing.id }}">
+        <input type="hidden" name="creator" value="{{ request.user }}">
+        <label for="content">Create Comment:</label><br>
+        <textarea class="content" type="text" name="content"></textarea><br>
+        <input class="btn btn-primary" type="submit" value="Comment">
+    </form>
+
+
+    <hr>
+    {% if comments %}
+        {% for comment in comments %}
+            <div class="comment-box">
+                <strong>{{ comment.author }}</strong><br>
+                {{ comment.comment_text }}
+            </div>
+            <hr>
+        {% endfor %}
+    {% else %}
+        <p>No comments made</p>
+    {% endif %}
+
+        
 {% endblock %}

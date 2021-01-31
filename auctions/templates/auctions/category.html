@@ -1,0 +1,14 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    
+    {% if not list_of_listings %}
+        <h2>No listings are associated with this category.</h2>
+    {% else %}
+        <h2>Listings associated with {{ category.category_name }}</h2>
+        {% for listing in list_of_listings %}
+            <a href="{% url 'listing' listing.id %}">{{ listing.title }}</a><br>
+        {% endfor %}
+    {% endif %}
+    
+{% endblock %}

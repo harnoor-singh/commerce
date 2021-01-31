@@ -3,7 +3,8 @@ from django.db import models
 
 
 class User(AbstractUser):
-    pass
+    # Listing is a string because Listing is not defined yet.
+    watchlist = models.ManyToManyField('Listing', blank=True, related_name="associated_watchlists")
 
 class Category(models.Model):
     category_name = models.CharField(max_length=64)

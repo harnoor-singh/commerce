@@ -1,0 +1,14 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    
+    {% if not list_of_categories %}
+        <h2>No categories exist right now. Please contact developer for more info.</h2>
+    {% else %}
+        <h2>Categories</h2>
+        {% for category in list_of_categories %}
+            <a href="{% url 'category' category.id %}">{{ category.category_name }}</a><br>
+        {% endfor %}
+    {% endif %}
+    
+{% endblock %}

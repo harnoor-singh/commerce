@@ -1,0 +1,24 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    
+    {% if message %}
+        <p>
+            You are not Logged In.<br>
+            Please Log In or Register to avail this Facility.
+        </p>
+    {% else %}
+
+        <h2>My WatchList</h2>
+
+        {% if not len_watchlist %}
+            You haven't added any listings to your watchlist yet.
+        {% else %}
+            {% for listing in watchlist %}
+                <a href="{% url 'listing' listing.id %}">{{ listing.title }}</a><br>
+            {% endfor %}
+        {% endif %}
+    
+    {% endif %}
+    
+{% endblock %}
